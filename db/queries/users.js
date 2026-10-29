@@ -1,4 +1,5 @@
 import db from "#db/client";
+import bcrypt from "bcrypt";
 
 export async function createUser(username, password) {
     const sql = `

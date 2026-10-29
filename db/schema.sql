@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS playlists_tracks;
 DROP TABLE IF EXISTS playlists;
 DROP TABLE IF EXISTS tracks;
+DROP TABLE IF EXISTS users;
+
 
 CREATE TABLE users (
   id serial PRIMARY KEY,
@@ -18,7 +20,7 @@ CREATE TABLE playlists (
   id serial PRIMARY KEY,
   name text NOT NULL,
   description text NOT NULL,
-  user_id int NOT NULL REFERENCES user(id) ON DELETE CASCADE
+  user_id int NOT NULL REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE playlists_tracks (
