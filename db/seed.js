@@ -3,6 +3,7 @@ import db from "#db/client";
 import { createPlaylist } from "#db/queries/playlists";
 import { createPlaylistTrack } from "#db/queries/playlists_tracks";
 import { createTrack } from "#db/queries/tracks";
+import { createUser } from "./queries/users";
 
 await db.connect();
 await seed();
@@ -11,7 +12,7 @@ console.log("🌱 Database seeded.");
 
 async function seed() {
   for (let i = 1; i <= 20; i++) {
-    await createUser();
+    await createUser("User" + i, "nobodylikesyouwhenyou're" + (i + 20));
     await createPlaylist("Playlist " + i, "lorem ipsum playlist description", i);
     await createTrack("Track " + i, i * 50000);
   }
