@@ -2,6 +2,10 @@ import express from "express";
 const router = express.Router();
 export default router;
 
+import requireUser from "#middleware/requireUser";
+
+router.use(requireUser);
+
 import {
   createPlaylist,
   getPlaylistById,
@@ -10,8 +14,9 @@ import {
 import { createPlaylistTrack } from "#db/queries/playlists_tracks";
 import { getTracksByPlaylistId } from "#db/queries/tracks";
 
+
 router.get("/", async (req, res) => {
-  const playlists = await getPlaylists();
+  const playlists = await getPlaylists(req.user.id);
   res.send(playlists);
 });
 

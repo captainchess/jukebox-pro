@@ -3,7 +3,7 @@ const router = express.Router();
 export default router;
 
 import requireBody from "#middleware/requireBody";
-import { createUser } from "#db/queries/users";
+import { createUser, getUserByUsernameAndPassword } from "#db/queries/users";
 import { createToken } from "#utils/jwt";
 
 router.post(
@@ -13,8 +13,17 @@ router.post(
     const { username, password } = req.body;
     const user = await createUser(username, password);
     const token = createToken({ id: user.id });
-    res.send(token);
+    res.status(201).send(token);
   },
 );
 
-
+router.post(
+  "/login",
+  requireBody(["username", "password"]),
+  async (req, res) => {
+    const { username, password } = req.body;
+    const user = await getUserByUsernameAndPassword(username, password);
+    const token = createToken({ id: user.id });
+    res.send(token);
+  },
+);
