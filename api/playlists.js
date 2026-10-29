@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
   if (!name || !description)
     return res.status(400).send("Request body requires: name, description");
 
-  const playlist = await createPlaylist(name, description);
+  const playlist = await createPlaylist(name, description, req.user.id);
   res.status(201).send(playlist);
 });
 
@@ -35,6 +35,8 @@ router.param("id", async (req, res, next, id) => {
   const playlist = await getPlaylistById(id);
   if (!playlist) return res.status(404).send("Playlist not found.");
 
+  if (playlist.user_id != req.user.id) return res.status(403).send(playlist);
+  
   req.playlist = playlist;
   next();
 });
