@@ -54,6 +54,6 @@ export async function getPlaylistsByTrackId(trackId) {
     WHERE 
     playlists_tracks.track_id = $2
   `;
-  const { rows: playlists } = await db.query(sql, [userId, trackId]);
+  const { rows: playlists } = await db.query(sql, [trackId]);
   return playlists;
 }
